@@ -11,3 +11,8 @@
 # Archivos de sistema
 .DS_Store
 Thumbs.db
+
+.terraform/
+**/node_modules/
+*.tfstate*
+.terraform.lock.hcl

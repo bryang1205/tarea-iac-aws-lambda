@@ -165,7 +165,6 @@ resource "aws_security_group" "crop_lambda" {
   }
 }
 
-
 resource "aws_security_group" "vpce_sqs" {
   name        = "${var.project}-${local.env}-sg-vpce-sqs"
   description = "SG para el VPC Endpoint de SQS: inbound 443 desde lambdas"
