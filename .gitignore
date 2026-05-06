@@ -1,0 +1,13 @@
+# Ignorar dependencias de Node
+**/node_modules/
+**/package-lock.json
+
+# Ignorar archivos pesados y temporales de Terraform
+**/.terraform/
+**/.terraform.lock.hcl
+**/*.tfstate
+**/*.tfstate.backup
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
