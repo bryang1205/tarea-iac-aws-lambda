@@ -1,7 +1,7 @@
 # ── BUCKET S3
 
 resource "aws_s3_bucket" "images" {
-  bucket = "${var.project}-${local.env}-images"
+  bucket = "${var.project}-${local.env}-${var.aws_region}-images"
 
   tags = {
     Name    = "${var.project}-${local.env}-images"

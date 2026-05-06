@@ -20,5 +20,6 @@ provider "aws" {
 }
 
 locals {
-  env = terraform.workspace
+  env  = terraform.workspace
+  name = "${var.project}-${local.env}"
 }
