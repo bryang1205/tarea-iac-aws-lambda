@@ -16,15 +16,15 @@ resource "aws_vpc_endpoint" "s3" {
           "s3:GetObject",
           "s3:PutObject"
         ]
-        Resource = "arn:aws:s3:::${var.project}-${var.env}-images/*"
+        Resource = "arn:aws:s3:::${var.project}-${local.env}-images/*"
       }
     ]
   })
 
   tags = {
-    Name    = "${var.project}-${var.env}-vpce-s3"
+    Name    = "${var.project}-${local.env}-vpce-s3"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -39,8 +39,8 @@ resource "aws_vpc_endpoint" "sqs" {
   security_group_ids = [aws_security_group.vpce_sqs.id]
 
   tags = {
-    Name    = "${var.project}-${var.env}-vpce-sqs"
+    Name    = "${var.project}-${local.env}-vpce-sqs"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }

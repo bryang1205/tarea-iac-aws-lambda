@@ -1,5 +1,5 @@
 resource "aws_iam_role" "upload_lambda" {
-  name        = "${var.project}-${var.env}-upload-lambda-role"
+  name        = "${var.project}-${local.env}-upload-lambda-role"
   description = "Rol de ejecución para upload-lambda"
 
   assume_role_policy = jsonencode({
@@ -17,9 +17,9 @@ resource "aws_iam_role" "upload_lambda" {
   })
 
   tags = {
-    Name    = "${var.project}-${var.env}-upload-lambda-role"
+    Name    = "${var.project}-${local.env}-upload-lambda-role"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -35,7 +35,7 @@ resource "aws_iam_role_policy_attachment" "upload_vpc_access" {
 
 
 resource "aws_iam_role_policy" "upload_s3" {
-  name = "${var.project}-${var.env}-upload-lambda-s3-policy"
+  name = "${var.project}-${local.env}-upload-lambda-s3-policy"
   role = aws_iam_role.upload_lambda.id
 
   policy = jsonencode({
@@ -45,7 +45,7 @@ resource "aws_iam_role_policy" "upload_s3" {
         Sid      = "AllowPutObjectUploads"
         Effect   = "Allow"
         Action   = "s3:PutObject"
-        Resource = "arn:aws:s3:::${var.project}-${var.env}-images/uploads/*"
+        Resource = "arn:aws:s3:::${var.project}-${local.env}-images/uploads/*"
       }
     ]
   })
@@ -53,7 +53,7 @@ resource "aws_iam_role_policy" "upload_s3" {
 
 
 resource "aws_iam_role" "crop_lambda" {
-  name        = "${var.project}-${var.env}-crop-lambda-role"
+  name        = "${var.project}-${local.env}-crop-lambda-role"
   description = "Rol de ejecución para crop-lambda"
 
   assume_role_policy = jsonencode({
@@ -71,9 +71,9 @@ resource "aws_iam_role" "crop_lambda" {
   })
 
   tags = {
-    Name    = "${var.project}-${var.env}-crop-lambda-role"
+    Name    = "${var.project}-${local.env}-crop-lambda-role"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -90,7 +90,7 @@ resource "aws_iam_role_policy_attachment" "crop_vpc_access" {
 
 
 resource "aws_iam_role_policy" "crop_s3" {
-  name = "${var.project}-${var.env}-crop-lambda-s3-policy"
+  name = "${var.project}-${local.env}-crop-lambda-s3-policy"
   role = aws_iam_role.crop_lambda.id
 
   policy = jsonencode({
@@ -100,13 +100,13 @@ resource "aws_iam_role_policy" "crop_s3" {
         Sid      = "AllowGetObjectUploads"
         Effect   = "Allow"
         Action   = "s3:GetObject"
-        Resource = "arn:aws:s3:::${var.project}-${var.env}-images/uploads/*"
+        Resource = "arn:aws:s3:::${var.project}-${local.env}-images/uploads/*"
       },
       {
         Sid      = "AllowPutObjectProcessed"
         Effect   = "Allow"
         Action   = "s3:PutObject"
-        Resource = "arn:aws:s3:::${var.project}-${var.env}-images/processed/*"
+        Resource = "arn:aws:s3:::${var.project}-${local.env}-images/processed/*"
       }
     ]
   })
@@ -114,7 +114,7 @@ resource "aws_iam_role_policy" "crop_s3" {
 
 
 resource "aws_iam_role_policy" "crop_sqs" {
-  name = "${var.project}-${var.env}-crop-lambda-sqs-policy"
+  name = "${var.project}-${local.env}-crop-lambda-sqs-policy"
   role = aws_iam_role.crop_lambda.id
 
   policy = jsonencode({

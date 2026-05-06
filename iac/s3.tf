@@ -1,12 +1,12 @@
 # ── BUCKET S3
 
 resource "aws_s3_bucket" "images" {
-  bucket = "${var.project}-${var.env}-images"
+  bucket = "${var.project}-${local.env}-images"
 
   tags = {
-    Name    = "${var.project}-${var.env}-images"
+    Name    = "${var.project}-${local.env}-images"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 

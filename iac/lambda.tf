@@ -11,7 +11,7 @@ data "archive_file" "crop_lambda" {
 }
 
 resource "aws_lambda_function" "upload" {
-  function_name    = "${var.project}-${var.env}-upload"
+  function_name    = "${var.project}-${local.env}-upload"
   description      = "Recibe imágenes via API Gateway y las sube a S3 en uploads/"
   role             = aws_iam_role.upload_lambda.arn
   runtime          = "nodejs20.x"
@@ -42,9 +42,9 @@ resource "aws_lambda_function" "upload" {
   ]
 
   tags = {
-    Name    = "${var.project}-${var.env}-upload"
+    Name    = "${var.project}-${local.env}-upload"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -52,7 +52,7 @@ resource "aws_lambda_function" "upload" {
 
 
 resource "aws_lambda_function" "crop" {
-  function_name    = "${var.project}-${var.env}-crop"
+  function_name    = "${var.project}-${local.env}-crop"
   description      = "Consume mensajes SQS, descarga imagen de S3, recorta a 40x40 PNG circular y guarda en processed/"
   role             = aws_iam_role.crop_lambda.arn
   runtime          = "nodejs20.x"
@@ -83,9 +83,9 @@ resource "aws_lambda_function" "crop" {
   ]
 
   tags = {
-    Name    = "${var.project}-${var.env}-crop"
+    Name    = "${var.project}-${local.env}-crop"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 

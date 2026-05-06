@@ -6,9 +6,9 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames  = true
 
   tags = {
-    Name    = "${var.project}-${var.env}-vpc"
+    Name    = "${var.project}-${local.env}-vpc"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -17,9 +17,9 @@ resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name    = "${var.project}-${var.env}-igw"
+    Name    = "${var.project}-${local.env}-igw"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -31,9 +31,9 @@ resource "aws_subnet" "public" {
   availability_zone = var.availability_zones[count.index]
 
   tags = {
-    Name    = "${var.project}-${var.env}-public-${var.availability_zones[count.index]}"
+    Name    = "${var.project}-${local.env}-public-${var.availability_zones[count.index]}"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -45,9 +45,9 @@ resource "aws_subnet" "private" {
   availability_zone = var.availability_zones[count.index]
 
   tags = {
-    Name    = "${var.project}-${var.env}-private-${var.availability_zones[count.index]}"
+    Name    = "${var.project}-${local.env}-private-${var.availability_zones[count.index]}"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -57,9 +57,9 @@ resource "aws_eip" "nat" {
   domain = "vpc"
 
   tags = {
-    Name    = "${var.project}-${var.env}-eip-nat-${count.index}"
+    Name    = "${var.project}-${local.env}-eip-nat-${count.index}"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -73,9 +73,9 @@ resource "aws_nat_gateway" "main" {
   depends_on = [aws_internet_gateway.main]
 
   tags = {
-    Name    = "${var.project}-${var.env}-nat-${count.index}"
+    Name    = "${var.project}-${local.env}-nat-${count.index}"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -89,9 +89,9 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name    = "${var.project}-${var.env}-rt-public"
+    Name    = "${var.project}-${local.env}-rt-public"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -112,9 +112,9 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name    = "${var.project}-${var.env}-rt-private-${count.index}"
+    Name    = "${var.project}-${local.env}-rt-private-${count.index}"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -125,7 +125,7 @@ resource "aws_route_table_association" "private" {
 }
 
 resource "aws_security_group" "upload_lambda" {
-  name        = "${var.project}-${var.env}-sg-upload-lambda"
+  name        = "${var.project}-${local.env}-sg-upload-lambda"
   description = "SG para upload-lambda: sin inbound, outbound 443 a VPC Endpoints"
   vpc_id      = aws_vpc.main.id
 
@@ -138,15 +138,15 @@ resource "aws_security_group" "upload_lambda" {
   }
 
   tags = {
-    Name    = "${var.project}-${var.env}-sg-upload-lambda"
+    Name    = "${var.project}-${local.env}-sg-upload-lambda"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
 
 resource "aws_security_group" "crop_lambda" {
-  name        = "${var.project}-${var.env}-sg-crop-lambda"
+  name        = "${var.project}-${local.env}-sg-crop-lambda"
   description = "SG para crop-lambda: sin inbound, outbound 443 a VPC Endpoints"
   vpc_id      = aws_vpc.main.id
 
@@ -159,15 +159,15 @@ resource "aws_security_group" "crop_lambda" {
   }
 
   tags = {
-    Name    = "${var.project}-${var.env}-sg-crop-lambda"
+    Name    = "${var.project}-${local.env}-sg-crop-lambda"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
 
 resource "aws_security_group" "vpce_sqs" {
-  name        = "${var.project}-${var.env}-sg-vpce-sqs"
+  name        = "${var.project}-${local.env}-sg-vpce-sqs"
   description = "SG para el VPC Endpoint de SQS: inbound 443 desde lambdas"
   vpc_id      = aws_vpc.main.id
 
@@ -188,8 +188,8 @@ resource "aws_security_group" "vpce_sqs" {
   }
 
   tags = {
-    Name    = "${var.project}-${var.env}-sg-vpce-sqs"
+    Name    = "${var.project}-${local.env}-sg-vpce-sqs"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }

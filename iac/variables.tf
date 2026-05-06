@@ -5,7 +5,7 @@ variable "aws_region" {
 }
 
 variable "env" {
-  description = "entorno"
+  description = "workspace (dev, qa, prod)"
   type        = string
   default     = "dev"
 }

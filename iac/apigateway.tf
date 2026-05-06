@@ -1,5 +1,5 @@
 resource "aws_apigatewayv2_api" "main" {
-  name          = "${var.project}-${var.env}-http-api"
+  name          = "${var.project}-${local.env}-http-api"
   protocol_type = "HTTP"
   description   = "HTTP API v2 para recibir imágenes via POST /upload"
 
@@ -11,9 +11,9 @@ resource "aws_apigatewayv2_api" "main" {
   }
 
   tags = {
-    Name    = "${var.project}-${var.env}-http-api"
+    Name    = "${var.project}-${local.env}-http-api"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -44,9 +44,9 @@ resource "aws_apigatewayv2_stage" "default" {
   }
 
   tags = {
-    Name    = "${var.project}-${var.env}-stage-default"
+    Name    = "${var.project}-${local.env}-stage-default"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 

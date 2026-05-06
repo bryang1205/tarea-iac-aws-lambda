@@ -2,13 +2,13 @@
 # El diagrama indica: formato JSON, retención 14 días
 
 resource "aws_cloudwatch_log_group" "apigw" {
-  name              = "/aws/apigateway/${var.project}-${var.env}"
+  name              = "/aws/apigateway/${var.project}-${local.env}"
   retention_in_days = 14
 
   tags = {
-    Name    = "/aws/apigateway/${var.project}-${var.env}"
+    Name    = "/aws/apigateway/${var.project}-${local.env}"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -16,13 +16,13 @@ resource "aws_cloudwatch_log_group" "apigw" {
 # El diagrama indica: /aws/lambda/...-upload, retención 14 días
 
 resource "aws_cloudwatch_log_group" "upload_lambda" {
-  name              = "/aws/lambda/${var.project}-${var.env}-upload"
+  name              = "/aws/lambda/${var.project}-${local.env}-upload"
   retention_in_days = 14
 
   tags = {
-    Name    = "/aws/lambda/${var.project}-${var.env}-upload"
+    Name    = "/aws/lambda/${var.project}-${local.env}-upload"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -30,13 +30,13 @@ resource "aws_cloudwatch_log_group" "upload_lambda" {
 # El diagrama indica: /aws/lambda/...-crop, retención 14 días
 
 resource "aws_cloudwatch_log_group" "crop_lambda" {
-  name              = "/aws/lambda/${var.project}-${var.env}-crop"
+  name              = "/aws/lambda/${var.project}-${local.env}-crop"
   retention_in_days = 14
 
   tags = {
-    Name    = "/aws/lambda/${var.project}-${var.env}-crop"
+    Name    = "/aws/lambda/${var.project}-${local.env}-crop"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -44,12 +44,12 @@ resource "aws_cloudwatch_log_group" "crop_lambda" {
 # El diagrama indica: Action notify via SNS topic
 
 resource "aws_sns_topic" "dlq_alarm" {
-  name = "${var.project}-${var.env}-dlq-alarm-topic"
+  name = "${var.project}-${local.env}-dlq-alarm-topic"
 
   tags = {
-    Name    = "${var.project}-${var.env}-dlq-alarm-topic"
+    Name    = "${var.project}-${local.env}-dlq-alarm-topic"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
@@ -82,6 +82,6 @@ resource "aws_cloudwatch_metric_alarm" "dlq_messages" {
   tags = {
     Name    = "${var.project}-${var.env}-dlq-messages-alarm"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }

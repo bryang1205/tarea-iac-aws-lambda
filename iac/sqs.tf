@@ -3,15 +3,15 @@ resource "aws_sqs_queue" "dlq" {
   message_retention_seconds = 1209600 # 14 días (según diagrama)
 
   tags = {
-    Name    = "${var.project}-${var.env}-image-dlq"
+    Name    = "${var.project}-${local.env}-image-dlq"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
 
 resource "aws_sqs_queue" "main" {
-  name                       = "${var.project}-${var.env}-image-queue"
+  name                       = "${var.project}-${local.env}-image-queue"
   visibility_timeout_seconds = var.sqs_visibility_timeout 
   message_retention_seconds  = 86400                      
   receive_wait_time_seconds  = 20                          
@@ -22,9 +22,9 @@ resource "aws_sqs_queue" "main" {
   })
 
   tags = {
-    Name    = "${var.project}-${var.env}-image-queue"
+    Name    = "${var.project}-${local.env}-image-queue"
     Project = var.project
-    Env     = var.env
+    Env     = local.env
   }
 }
 
