@@ -1,0 +1,10 @@
+{
+  "name": "crop-lambda",
+  "version": "1.0.0",
+  "description": "Lambda",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.0.0"
+  }
+}
