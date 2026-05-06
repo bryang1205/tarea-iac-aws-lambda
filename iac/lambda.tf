@@ -1,13 +1,13 @@
 data "archive_file" "upload_lambda" {
   type        = "zip"
   source_dir  = "../src/upload"
-  output_path = "../src/upload.zip"
+  output_path = "../src/upload/upload.zip"
 }
 
 data "archive_file" "crop_lambda" {
   type        = "zip"
   source_dir  = "../src/crop"
-  output_path = "../src/crop.zip"
+  output_path = "../src/crop/crop.zip"
 }
 
 resource "aws_lambda_function" "upload" {
