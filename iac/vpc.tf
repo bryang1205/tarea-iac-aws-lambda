@@ -9,14 +9,14 @@ resource "aws_vpc_endpoint" "s3" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid       = "AllowS3BucketAccess"
+        Sid       = "AllowAllS3Actions"
         Effect    = "Allow"
         Principal = "*"
-        Action = [
-          "s3:GetObject",
-          "s3:PutObject"
+        Action    = "s3:*"
+        Resource  = [
+          "arn:aws:s3:::${var.project}-${local.env}-${var.aws_region}-images",
+          "arn:aws:s3:::${var.project}-${local.env}-${var.aws_region}-images/*"
         ]
-        Resource = "arn:aws:s3:::${var.project}-${local.env}-images/*"
       }
     ]
   })

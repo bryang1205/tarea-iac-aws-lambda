@@ -62,7 +62,7 @@ resource "aws_sns_topic" "dlq_alarm" {
 #   Action: notify via SNS topic
 
 resource "aws_cloudwatch_metric_alarm" "dlq_messages" {
-  alarm_name          = "${var.project}-${var.env}-dlq-messages-alarm"
+  alarm_name          = "${var.project}-${local.env}-dlq-messages-alarm"
   alarm_description   = "Alerta cuando el DLQ tiene mensajes visibles — indica fallos en crop-lambda"
   namespace           = "AWS/SQS"
   metric_name         = "ApproximateNumberOfMessagesVisible"
@@ -80,7 +80,7 @@ resource "aws_cloudwatch_metric_alarm" "dlq_messages" {
   alarm_actions = [aws_sns_topic.dlq_alarm.arn]
 
   tags = {
-    Name    = "${var.project}-${var.env}-dlq-messages-alarm"
+    Name    = "${var.project}-${local.env}-dlq-messages-alarm"
     Project = var.project
     Env     = local.env
   }

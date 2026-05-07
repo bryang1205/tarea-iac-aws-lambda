@@ -1,5 +1,5 @@
 resource "aws_sqs_queue" "dlq" {
-  name                      = "${var.project}-${var.env}-image-dlq"
+  name                      = "${var.project}-${local.env}-image-dlq"
   message_retention_seconds = 1209600 # 14 días (según diagrama)
 
   tags = {
@@ -36,16 +36,16 @@ resource "aws_sqs_queue_policy" "main" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid       = "AllowS3Notifications"
-        Effect    = "Allow"
+        Sid    = "AllowS3Notifications"
+        Effect = "Allow"
         Principal = {
           Service = "s3.amazonaws.com"
         }
-        Action    = "sqs:SendMessage"
-        Resource  = aws_sqs_queue.main.arn
+        Action   = "sqs:SendMessage"
+        Resource = aws_sqs_queue.main.arn
         Condition = {
           ArnLike = {
-            "aws:SourceArn" = "arn:aws:s3:::${var.project}-${var.env}-images"
+            "aws:SourceArn" = aws_s3_bucket.images.arn
           }
         }
       }

@@ -45,7 +45,7 @@ resource "aws_iam_role_policy" "upload_s3" {
         Sid      = "AllowPutObjectUploads"
         Effect   = "Allow"
         Action   = "s3:PutObject"
-        Resource = "arn:aws:s3:::${var.project}-${local.env}-images/uploads/*"
+        Resource = "${aws_s3_bucket.images.arn}/uploads/*"
       }
     ]
   })
@@ -100,13 +100,13 @@ resource "aws_iam_role_policy" "crop_s3" {
         Sid      = "AllowGetObjectUploads"
         Effect   = "Allow"
         Action   = "s3:GetObject"
-        Resource = "arn:aws:s3:::${var.project}-${local.env}-images/uploads/*"
+        Resource = "${aws_s3_bucket.images.arn}/uploads/*"
       },
       {
         Sid      = "AllowPutObjectProcessed"
         Effect   = "Allow"
         Action   = "s3:PutObject"
-        Resource = "arn:aws:s3:::${var.project}-${local.env}-images/processed/*"
+        Resource = "${aws_s3_bucket.images.arn}/processed/*"
       }
     ]
   })
